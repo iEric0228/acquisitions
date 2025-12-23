@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: acquisitions-postgres-dev
+    environment:
+      POSTGRES_DB: neondb
+      POSTGRES_USER: neon
+      POSTGRES_PASSWORD: npg
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U neon -d neondb"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  app:
+    build: .
+    container_name: acquisitions-app-dev
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.development
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgres://neon:npg@postgres:5432/neondb
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+volumes:
+  postgres_data:

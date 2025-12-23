@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: acquisitions-app-prod
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.production
+    environment:
+      NODE_ENV: production
+      # In production, DATABASE_URL must point to your Neon Cloud database,
+      # e.g. postgres://user:password@ep-....neon.tech/neondb
+      DATABASE_URL: ${DATABASE_URL}
+    # No Neon Local in production; the app talks directly to Neon Cloud.
