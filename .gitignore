@@ -1,2 +1,24 @@
+# Environment files (keep examples)
+.env
 .env.*
-WARP.md.neon_local/
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Runtime
+.DS_Store
+.neon_local/
+
+# IDEs
+.vscode/
+.idea/
+
+# Build outputs
+dist/
+build/

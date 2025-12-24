@@ -17,13 +17,15 @@ services:
       retries: 3
 
   app:
-    build: .
+    build: 
+      context: ../../
+      dockerfile: config/docker/Dockerfile
     container_name: acquisitions-app-dev
     command: npm run dev
     ports:
       - "3000:3000"
     env_file:
-      - .env.development
+      - ../../environments/.env.development
     environment:
       NODE_ENV: development
       DATABASE_URL: postgres://neon:npg@postgres:5432/neondb

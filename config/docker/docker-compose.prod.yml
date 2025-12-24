@@ -1,13 +1,13 @@
-version: "3.9"
-
 services:
   app:
-    build: .
+    build: 
+      context: ../../
+      dockerfile: config/docker/Dockerfile
     container_name: acquisitions-app-prod
     ports:
       - "3000:3000"
     env_file:
-      - .env.production
+      - ../../environments/.env.production
     environment:
       NODE_ENV: production
       # In production, DATABASE_URL must point to your Neon Cloud database,

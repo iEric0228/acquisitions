@@ -1,6 +1,20 @@
-import 'dotenv/config';
+import { config } from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import { neon, neonConfig } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
+
+// Get the directory of this config file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load environment variables from environments directory
+config({ path: join(__dirname, '../../environments/.env') });
+if (process.env.NODE_ENV === 'development') {
+  config({ path: join(__dirname, '../../environments/.env.development'), override: true });
+} else if (process.env.NODE_ENV === 'production') {
+  config({ path: join(__dirname, '../../environments/.env.production'), override: true });
+}
 
 // Configure for local development vs production
 if (process.env.NODE_ENV === 'development') {

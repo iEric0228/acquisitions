@@ -7,9 +7,9 @@ echo "🚀 Starting Acquisition App in Development Mode"
 echo "================================================"
 
 # Check if .env.development exists
-if [ ! -f .env.development ]; then
-    echo "❌ Error: .env.development file not found!"
-    echo "   Please copy .env.example to .env.development and update with your values."
+if [ ! -f environments/.env.development ]; then
+    echo "❌ Error: environments/.env.development file not found!"
+    echo "   Please copy environments/.env.example to environments/.env.development and update with your values."
     exit 1
 fi
 
@@ -27,7 +27,7 @@ echo ""
 
 # Start development environment in detached mode
 echo "🐳 Starting Docker containers..."
-docker compose -f docker-compose.dev.yml up --build -d
+docker compose -f config/docker/docker-compose.dev.yml up --build -d
 
 # Wait for the database to be ready
 echo "⏳ Waiting for the database to be ready..."
@@ -41,7 +41,7 @@ npm run db:migrate
 # Show container status
 echo ""
 echo "📊 Container Status:"
-docker compose -f docker-compose.dev.yml ps
+docker compose -f config/docker/docker-compose.dev.yml ps
 
 echo ""
 echo "🎉 Development environment started!"
@@ -49,7 +49,7 @@ echo "   Application: http://localhost:3000"
 echo "   Database: postgres://neon:npg@localhost:5432/neondb"
 echo ""
 echo "📄 To view logs:"
-echo "   docker compose -f docker-compose.dev.yml logs -f app"
+echo "   docker compose -f config/docker/docker-compose.dev.yml logs -f app"
 echo ""
 echo "🛑 To stop the environment:"
-echo "   docker compose -f docker-compose.dev.yml down"
+echo "   docker compose -f config/docker/docker-compose.dev.yml down"
